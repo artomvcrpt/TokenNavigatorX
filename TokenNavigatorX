@@ -1,0 +1,35 @@
+# scripts/main.py
+
+from scripts.token_tracking import fetch_token_data
+from scripts.performance_analysis import analyze_performance
+from scripts.portfolio_management import create_portfolio, calculate_portfolio_value
+from scripts.visualization import plot_price_trend, plot_portfolio_value
+
+def main():
+    api_url = 'https://api.token.example.com'
+    
+    # Token Tracking
+    token_data_df = fetch_token_data(api_url, 'BTC')
+    print("Token Data:")
+    print(token_data_df.head())
+    
+    # Performance Analysis
+    performance_df = analyze_performance(token_data_df)
+    print("Performance Analysis:")
+    print(performance_df)
+    
+    # Portfolio Management
+    tokens = ['BTC', 'ETH']
+    quantities = [1.5, 10]
+    portfolio_df = create_portfolio(tokens, quantities)
+    token_prices = {'BTC': 30000, 'ETH': 2000}
+    total_value = calculate_portfolio_value(portfolio_df, token_prices)
+    print(f'Total Portfolio Value: ${total_value}')
+    
+    # Visualization
+    plot_price_trend(token_data_df)
+    portfolio_df['value'] = portfolio_df['quantity'] * portfolio_df['price']
+    plot_portfolio_value(portfolio_df)
+
+if __name__ == "__main__":
+    main()
